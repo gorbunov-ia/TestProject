@@ -3,63 +3,13 @@ public class TestCreator {
         String color = "RED";
         String model = "IPhone";
 
-        AppleDevice device = (new TestCreator()).createDevice(model, color);
+        Director director = new Director(AbstractBuilder.getInstance(model));
+        AppleDevice device = director.setColor(color).builAppledDevice();
         System.out.println(device);
-    }
-
-    public AppleDevice createDevice(String model, String color) {
-        AppleDevice device = null;
-        //JDK7+
-        switch (model) {
-            case "IPhone":
-                switch (color) {
-                    case "WHITE": device = new IPhonedWhite();
-                        break;
-                    case "BLACK": device = new IPhoneBlack();
-                        break;
-                    case "RED": device = new IPhoneRed();
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid color: " + color);
-                }
-                break;
-            case "IPad":
-                switch (color) {
-                    case "WHITE": device = new IPadWhite();
-                        break;
-                    case "BLACK": device = new IPadBlack();
-                        break;
-                    case "RED": device = new IPadRed();
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid color: " + color);
-                }
-                break;
-            case "IPod":
-                switch (color) {
-                    case "WHITE": device = new IPodWhite();
-                        break;
-                    case "BLACK": device = new IPodBlack();
-                        break;
-                    case "RED": device = new IPodRed();
-                        break;
-                    default:
-                        throw new IllegalArgumentException("Invalid color: " + color);
-                }
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid model: " + model);
-        }
-
-        //logic
-        device.validate();
-        device.doLogic();
-
-        return device;
     }
 }
 
-//enum Color {RED, WHITE, BLACK}
+enum Color {RED, WHITE, BLACK}
 
 class AppleDevice {
 
@@ -67,15 +17,158 @@ class AppleDevice {
     public void doLogic(){};
 }
 
-class IPhonedWhite extends AppleDevice {}
-class IPhoneBlack extends AppleDevice {}
-class IPhoneRed extends AppleDevice {}
+class IPhone extends AppleDevice {
+    private Color color;
 
-class IPadWhite extends AppleDevice {}
-class IPadBlack extends AppleDevice {}
-class IPadRed extends AppleDevice {}
+    public Color getColor() {
+        return color;
+    }
 
-class IPodWhite extends AppleDevice {}
-class IPodBlack extends AppleDevice {}
-class IPodRed extends AppleDevice {}
+    public void setColor(Color color) {
+        this.color = color;
+    }
 
+    @Override
+    public String toString() {
+        return "IPhone{" +
+                "color=" + color +
+                '}';
+    }
+}
+
+class IPad extends AppleDevice {
+    private Color color;
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "IPad{" +
+                "color=" + color +
+                '}';
+    }
+}
+
+class IPod extends AppleDevice {
+    private Color color;
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    @Override
+    public String toString() {
+        return "IPod{" +
+                "color=" + color +
+                '}';
+    }
+}
+
+abstract class AbstractBuilder {
+
+    public static AbstractBuilder getInstance(String model){
+        switch (model) {
+            case "IPhone":
+                return new IPhoneBuilder();
+            case "IPad":
+                return new IPodBuilder();
+            case "IPod":
+                return new IPadBuilder();
+            default:
+                throw new IllegalArgumentException("Invalid model: " + model);
+        }
+    };
+    //default method
+    public void buildColor(Color color) {};
+
+    public abstract AppleDevice build();
+}
+
+class IPhoneBuilder extends AbstractBuilder {
+    private final IPhone instance;
+
+    public IPhoneBuilder(){
+        instance = new IPhone();
+    }
+
+    @Override
+    public void buildColor(Color color) {
+        instance.setColor(color);
+    }
+
+    @Override
+    public AppleDevice build() {
+        return instance;
+    }
+
+}
+
+class IPodBuilder extends AbstractBuilder {
+    private final IPod instance;
+
+    public IPodBuilder(){
+        instance = new IPod();
+    }
+
+    @Override
+    public void buildColor(Color color) {
+        instance.setColor(color);
+    }
+
+    @Override
+    public AppleDevice build() {
+        return instance;
+    }
+
+}
+
+class IPadBuilder extends AbstractBuilder {
+    private final IPad instance;
+
+    public IPadBuilder(){
+        instance = new IPad();
+    }
+
+    @Override
+    public void buildColor(Color color) {
+        instance.setColor(color);
+    }
+
+    @Override
+    public AppleDevice build() {
+        return instance;
+    }
+
+}
+
+class Director {
+    private AbstractBuilder builder;
+
+    public Director(AbstractBuilder builder) {
+        this.builder = builder;
+    }
+
+    public Director setColor(String color) {
+        builder.buildColor(Color.valueOf(color));
+        return this;
+    }
+
+    public AppleDevice builAppledDevice() {
+        AppleDevice device = builder.build();
+        //logic
+        device.validate();
+        device.doLogic();
+
+        return device;
+    }
+}
