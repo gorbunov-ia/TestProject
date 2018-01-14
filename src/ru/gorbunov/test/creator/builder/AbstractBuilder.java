@@ -1,4 +1,7 @@
-package ru.gorbunov.test.creator;
+package ru.gorbunov.test.creator.builder;
+
+import ru.gorbunov.test.creator.devices.AppleDevice;
+import ru.gorbunov.test.creator.devices.modern.Color;
 
 public abstract class AbstractBuilder {
 
@@ -7,9 +10,9 @@ public abstract class AbstractBuilder {
             case "IPhone":
                 return new IPhoneBuilder();
             case "IPad":
-                return new IPodBuilder();
-            case "IPod":
                 return new IPadBuilder();
+            case "IPod":
+                return new IPodBuilder();
             default:
                 throw new IllegalArgumentException("Invalid model: " + model);
         }

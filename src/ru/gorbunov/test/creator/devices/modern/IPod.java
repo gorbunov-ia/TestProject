@@ -1,6 +1,8 @@
-package ru.gorbunov.test.creator;
+package ru.gorbunov.test.creator.devices.modern;
 
-public class IPad extends AppleDevice {
+import ru.gorbunov.test.creator.devices.AppleDevice;
+
+public class IPod extends AppleDevice {
     private Color color;
 
     public Color getColor() {
@@ -13,7 +15,7 @@ public class IPad extends AppleDevice {
 
     @Override
     public String toString() {
-        return "IPad{" +
+        return "IPod{" +
                 "color=" + color +
                 '}';
     }

@@ -1,4 +1,7 @@
-package ru.gorbunov.test.creator;
+package ru.gorbunov.test.creator.builder;
+
+import ru.gorbunov.test.creator.devices.AppleDevice;
+import ru.gorbunov.test.creator.devices.modern.Color;
 
 public class Director {
     private AbstractBuilder builder;
