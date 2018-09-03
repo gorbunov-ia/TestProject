@@ -1,4 +1,4 @@
-package ru.gorbunov.test.algorithms;
+package ru.gorbunov.test.algorithms.methods;
 
 import java.io.BufferedReader;
 import java.io.IOException;

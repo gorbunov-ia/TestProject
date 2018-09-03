@@ -1,4 +1,4 @@
-package ru.gorbunov.test.algorithms;
+package ru.gorbunov.test.algorithms.methods;
 
 import java.io.ByteArrayInputStream;
 import java.util.HashMap;
