@@ -6,13 +6,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * Первая строка содержит количество предметов 1≤n≤10^3 и вместимость рюкзака 0≤W≤2⋅10^6. Каждая из следующих n строк
+ * задаёт стоимость 0≤c_i≤2⋅10^6 и объём 0<w_i≤2⋅10^6 предмета (n, W, c_i, w_i — целые числа).
+ * Выведите максимальную стоимость частей предметов (от каждого предмета можно отделить любую часть,
+ * стоимость и объём при этом пропорционально уменьшатся), помещающихся в данный рюкзак,
+ * с точностью не менее трёх знаков после запятой.
+ */
 public class Backpack {
 
     public static void main(String[] args) {
         new Backpack().process();
     }
 
-    void process() {
+    private void process() {
         Scanner scanner = new Scanner(new ByteArrayInputStream("1 10\n500 30".getBytes()));
 //        Scanner scanner = new Scanner(System.in);
         final int length = scanner.nextInt();

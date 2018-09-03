@@ -4,6 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * В первой строке задано два целых числа 1≤n≤50000 и 1≤m≤50000 — количество отрезков и точек на прямой, соответственно.
+ * Следующие n строк содержат по два целых числа a_i и b_i (a_i≤b_i) — координаты концов отрезков.
+ * Последняя строка содержит m целых чисел — координаты точек. Все координаты не превышают 10^8 по модулю.
+ * Точка считается принадлежащей отрезку, если она находится внутри него или на границе.
+ * Для каждой точки в порядке появления во вводе выведите, скольким отрезкам она принадлежит.
+ */
 public class LinesContainsPoints {
 
     public static void main(String[] args) {
@@ -88,7 +95,7 @@ public class LinesContainsPoints {
             int l = -1;
             int r = source.length;
             while (r > l + 1) {
-                int m = (int)(Math.ceil((double) l + ((r - l) / 2)));
+                int m = (int) (Math.ceil((double) l + ((r - l) / 2)));
                 if (include) {
                     if (source[m] > point) {
                         r = m;

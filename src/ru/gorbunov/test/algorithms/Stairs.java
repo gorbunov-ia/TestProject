@@ -3,6 +3,11 @@ package ru.gorbunov.test.algorithms;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
+/**
+ * Даны число 1≤n≤102 ступенек лестницы и целые числа −10^4≤a_1,…,a_n≤10^4, которыми помечены ступеньки.
+ * Найдите максимальную сумму, которую можно получить, идя по лестнице снизу вверх (от нулевой до n-й ступеньки),
+ * каждый раз поднимаясь на одну или две ступеньки.
+ */
 public class Stairs {
     public static void main(String[] args) {
         //Scanner scanner = new Scanner(new ByteArrayInputStream("3\n-1 2 1".getBytes()));

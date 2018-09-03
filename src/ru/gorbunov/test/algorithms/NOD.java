@@ -3,6 +3,9 @@ package ru.gorbunov.test.algorithms;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
+/**
+ * По данным двум числам 1≤a,b≤2⋅109 найдите их наибольший общий делитель.
+ */
 public class NOD {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(new ByteArrayInputStream("14159572 63967072".getBytes()));
@@ -13,7 +16,8 @@ public class NOD {
         System.out.println(nod(a, b));
 
     }
-    public static int nod(int a, int b) {
+
+    private static int nod(int a, int b) {
         if (a == 0) {
             return b;
         }
@@ -23,6 +27,6 @@ public class NOD {
         if (a > b) {
             return nod(a % b, b);
         }
-        return nod (a, b % a);
+        return nod(a, b % a);
     }
 }

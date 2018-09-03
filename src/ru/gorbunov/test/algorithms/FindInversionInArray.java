@@ -5,6 +5,13 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.Scanner;
 
+/**
+ * Первая строка содержит число 1≤n≤105, вторая — массив A[1…n], содержащий натуральные числа, не превосходящие 10^9.
+ * Необходимо посчитать число пар индексов 1≤i<j≤n, для которых A[i]>A[j]. (Такая пара элементов называется
+ * инверсией массива. Количество инверсий в массиве является в некотором смысле его мерой неупорядоченности:
+ * например, в упорядоченном по неубыванию массиве инверсий нет вообще, а в массиве, упорядоченном по убыванию,
+ * инверсию образуют каждые два элемента.)
+ */
 public class FindInversionInArray {
 
     public static void main(String[] args) {
@@ -20,7 +27,7 @@ public class FindInversionInArray {
 //        Scanner scanner = new Scanner(new ByteArrayInputStream("6\n1 3 4 5 6 2".getBytes()));
 //        Scanner scanner = new Scanner(System.in);
         int[] result = new int[scanner.nextInt()];
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             result[i] = scanner.nextInt();
         }
         return result;
@@ -28,8 +35,8 @@ public class FindInversionInArray {
 
     private static long n2(int[] source) {
         int inversionCounter = 0;
-        for(int i = 0; i < source.length - 1; i++) {
-            for(int j = i + 1; j < source.length; j++) {
+        for (int i = 0; i < source.length - 1; i++) {
+            for (int j = i + 1; j < source.length; j++) {
                 if (source[i] > source[j]) {
                     inversionCounter++;
                 }
@@ -40,7 +47,7 @@ public class FindInversionInArray {
 
     private static long nLogN(int[] source) {
         final Queue<MergeResult> quque = new ArrayDeque<>(source.length);
-        for(int i = 0; i < source.length; i = i + 2) {
+        for (int i = 0; i < source.length; i = i + 2) {
             final MergeResult left = new MergeResult(source[i], false);
             final MergeResult right;
             if (i + 1 < source.length) {
@@ -64,7 +71,6 @@ public class FindInversionInArray {
             quque.add(new MergeResult(first, second));
         }
     }
-
 
 
     private static final class MergeResult {
@@ -110,7 +116,7 @@ public class FindInversionInArray {
                     result[i] = l[leftIndex++];
                 }
             }
-         }
+        }
     }
 
 }

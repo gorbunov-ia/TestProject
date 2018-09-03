@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * По данному числу 1≤n≤109 найдите максимальное число k, для которого n можно представить как сумму k различных
+ * натуральных слагаемых. Выведите в первой строке число k, во второй — k слагаемых.
+ */
 public class DifferentTerms {
 
     public static void main(String[] args) {

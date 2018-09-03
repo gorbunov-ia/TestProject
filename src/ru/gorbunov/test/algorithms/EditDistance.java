@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.util.AbstractMap;
 import java.util.Map;
 
+/**
+ * Вычислите расстояние редактирования двух данных непустых строк длины не более 10^2,
+ * содержащих строчные буквы латинского алфавита.
+ */
 public class EditDistance {
 
     public static void main(String[] args) throws IOException {

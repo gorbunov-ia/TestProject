@@ -4,6 +4,11 @@ import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * В первой строке даны целое число 1≤n≤105 и массив A[1…n] из n различных натуральных чисел, не превышающих 10^9,
+ * в порядке возрастания, во второй — целое число 1≤k≤10^5 и k натуральных чисел b1,…,bk, не превышающих 10^9.
+ * Для каждого i от 1 до k необходимо вывести индекс 1≤j≤n, для которого A[j]=b_i, или −1, если такого j нет.
+ */
 public class BinarySearch {
 
     public static void main(String[] args) {

@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * У вас есть примитивный калькулятор, который умеет выполнять всего три операции с текущим числом x:
+ * заменить x на 2x, 3x или x+1. По данному целому числу 1≤n≤10^5 определите минимальное число операций k,
+ * необходимое, чтобы получить n из 1. Выведите k и последовательность промежуточных чисел.
+ */
 public class Calc {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(new ByteArrayInputStream("96234".getBytes()));

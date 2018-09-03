@@ -3,6 +3,10 @@ package ru.gorbunov.test.algorithms;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
 
+/**
+ * Первая строка содержит число 1≤n≤10^4, вторая — n натуральных чисел, не превышающих 10.
+ * Выведите упорядоченную по неубыванию последовательность этих чисел.
+ */
 public class CountSort {
 
     private static final int MAX_DIGIT = 10;

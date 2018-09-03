@@ -2,6 +2,11 @@ package ru.gorbunov.test.algorithms;
 
 import java.util.Arrays;
 
+/**
+ * Дано целое число 1≤n≤103 и массив A[1…n] натуральных чисел, не превосходящих 2⋅10^9. Выведите максимальное 1≤k≤n,
+ * для которого найдётся подпоследовательность 1≤i_1<i_2<…<i_k≤n длины k, в которой каждый элемент делится на
+ * предыдущий (формально: для  всех 1≤j<k, A[ij]|A[ij+1]).
+ */
 public class LongestIncreasingSubsequence {
 
     public static void main(String[] args) {
