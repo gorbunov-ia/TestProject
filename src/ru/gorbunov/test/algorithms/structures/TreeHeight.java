@@ -5,8 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -68,12 +66,12 @@ public class TreeHeight {
     }
 
     @ParameterizedTest
-    @MethodSource("createTestData2")
+    @MethodSource("createTestData")
     public void test(List<Integer> input, int result) {
         Assertions.assertEquals(result, new TreeHeight().process(input.stream().mapToInt(Integer::intValue).toArray()));
     }
 
-    private static Stream<Arguments> createTestData2() {
+    private static Stream<Arguments> createTestData() {
         return Stream.of(
                 Arguments.of(Arrays.asList(4, -1, 4, 1, 1), 3),
                 Arguments.of(Arrays.asList(9, 7, 5, 5, 2, 9, 9, 9, 2, -1), 4));
