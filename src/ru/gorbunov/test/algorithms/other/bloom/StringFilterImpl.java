@@ -3,31 +3,38 @@ package ru.gorbunov.test.algorithms.other.bloom;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicIntegerArray;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 class StringFilterImpl implements Filter<String> {
 
-    private final boolean[] filter;
+    private final AtomicIntegerArray filter;
     private final Collection<Function<String, Integer>> hashFunctions;
 
     StringFilterImpl(int size, int hashFunctionCount) {
         if (size < 1 || hashFunctionCount < 1) {
             throw new IllegalArgumentException();
         }
-        filter = new boolean[size];
+        filter = new AtomicIntegerArray(size);
         hashFunctions = createHashFunctions(size, hashFunctionCount);
     }
 
     @Override
     public void add(String element) {
-        hashFunctions.forEach(function -> filter[function.apply(element)] = true);
+        executeForAllHashFunctions(element, filter::incrementAndGet);
+    }
+
+    @Override
+    public void remove(String element) {
+        executeForAllHashFunctions(element, filter::decrementAndGet);
     }
 
     @Override
     public Answer contains(String element) {
         for (Function<String, Integer> function : hashFunctions) {
-            if (!filter[(function.apply(element))]) {
+            if (filter.get(function.apply(element)) == 0) {
                 return Answer.NO;
             }
         }
@@ -51,5 +58,9 @@ class StringFilterImpl implements Filter<String> {
             h = seed * h + value.charAt(i);
         }
         return Math.abs(h % maxValue);
+    }
+
+    private void executeForAllHashFunctions(String element, Consumer<Integer> consumer) {
+        hashFunctions.forEach(function -> consumer.accept(function.apply(element)));
     }
 }

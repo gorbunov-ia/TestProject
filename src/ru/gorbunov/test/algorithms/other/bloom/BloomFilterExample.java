@@ -1,6 +1,11 @@
 package ru.gorbunov.test.algorithms.other.bloom;
 
 public class BloomFilterExample {
+
+    private static final String APPLE = "Apple";
+    private static final String BANANA = "Banana";
+    private static final String ORANGE = "Orange";
+
     public static void main(String[] args) {
         new BloomFilterExample().example();
     }
@@ -8,12 +13,12 @@ public class BloomFilterExample {
     private void example() {
         final Filter<String> filter = createBloomFilter();
 
-        filter.add("Apple");
-        filter.add("Banana");
+        filter.add(APPLE);
+        filter.add(BANANA);
+        checkAndPrintAllFruits(filter);
 
-        System.out.println(filter.contains("Apple"));
-        System.out.println(filter.contains("Banana"));
-        System.out.println(filter.contains("Orange"));
+        filter.remove(BANANA);
+        checkAndPrintAllFruits(filter);
     }
 
     private Filter<String> createBloomFilter() {
@@ -35,6 +40,17 @@ public class BloomFilterExample {
 
     private int optimalHashFunctionCount(int filterSize, int expectedElements) {
         return (int) ((double) filterSize / expectedElements * Math.log(2));
+    }
+
+    private void checkAndPrintAllFruits(Filter<String> filter) {
+        System.out.println("======");
+        doPrint(filter, APPLE);
+        doPrint(filter, BANANA);
+        doPrint(filter, ORANGE);
+    }
+
+    private void doPrint(Filter<String> filter, String fruit) {
+        System.out.println("Filter is contains " + fruit + ": " + filter.contains(fruit));
     }
 
 }
