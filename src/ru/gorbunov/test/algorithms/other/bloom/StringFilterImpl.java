@@ -28,6 +28,9 @@ class StringFilterImpl implements Filter<String> {
 
     @Override
     public void remove(String element) {
+        if (contains(element) == Answer.NO) {
+            throw new IllegalArgumentException();
+        }
         executeForAllHashFunctions(element, filter::decrementAndGet);
     }
 
