@@ -4,7 +4,7 @@ package ru.gorbunov.test.algorithms.structures;
  * Имплементация очереди с приоритетом на
  * основе max кучи.
  */
-public class PriorityQueue {
+public class MaxPriorityQueue {
 
     /**
      * 1..N
@@ -12,16 +12,16 @@ public class PriorityQueue {
     private final int[] data;
     private int size = 0;
 
-    public PriorityQueue(int maxSize) {
+    public MaxPriorityQueue(int maxSize) {
         data = new int[maxSize + 1];
     }
 
     public static void main(String[] args) {
-        final PriorityQueue queue = new PriorityQueue(16);
+        final MaxPriorityQueue queue = new MaxPriorityQueue(16);
         queue.insert(1);
         queue.insert(5);
         queue.insert(3);
-        queue.changePrioriry(3, 6);
+        queue.changePriority(3, 6);
         queue.insert(3);
         queue.insert(2);
         queue.remove(5);
@@ -94,10 +94,10 @@ public class PriorityQueue {
         extractMax();
     }
 
-    public void changePrioriry(int index, int newPrioriry) {
-        final int oldPrioriry = data[index];
-        data[index] = newPrioriry;
-        if (newPrioriry > oldPrioriry) {
+    public void changePriority(int index, int newPriority) {
+        final int oldPriority = data[index];
+        data[index] = newPriority;
+        if (newPriority > oldPriority) {
             shiftUp(index);
         } else {
             shiftDown(index);
