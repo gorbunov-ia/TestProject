@@ -7,9 +7,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -44,25 +46,16 @@ public class MultipleCoreProcessor {
 
     private List<ProcessResult> dispatch(int processorCount, List<Integer> tasks) {
         final List<ProcessResult> result = new ArrayList<>(tasks.size());
-        final List<Processor> processors = createProcessors(processorCount);
+        final Queue<Processor> processors = createProcessors(processorCount);
         final Queue<Task> taskQueue = createTasks(tasks);
 
         while (!taskQueue.isEmpty()) {
-            final Task task = taskQueue.peek();
-            for (Processor processor : processors) {
-                if (processor.isFree()) {
-                    processor.process(task);
-                    result.add(new ProcessResult(processor.getNumber(), processor.getTaskStartTime()));
-                    break;
-                }
-            }
+            final Task task = taskQueue.poll();
+            final Processor processor = processors.poll();
 
-            if (task.getStatus() != TaskStatus.WAIT) {
-                taskQueue.poll();
-            } else {
-                processors.forEach(Processor::doWork);
-            }
-
+            processor.process(task, processor.getTaskEndTime());
+            result.add(new ProcessResult(processor.getNumber(), processor.getTaskStartTime()));
+            processors.add(processor);
         }
         return result;
     }
@@ -73,17 +66,16 @@ public class MultipleCoreProcessor {
         return taskQueue;
     }
 
-    private List<Processor> createProcessors(int processorCount) {
-        final List<Processor> processors = new ArrayList<>(processorCount);
+    private Queue<Processor> createProcessors(int processorCount) {
+        final PriorityQueue<Processor> processors = new PriorityQueue<>(processorCount);
         for (int i = 0; i < processorCount; i++) {
             processors.add(new Processor(i));
         }
         return processors;
     }
 
-    private static class Processor {
+    private static class Processor implements Comparable<Processor> {
         private final int number;
-        private long ticks;
 
         private Task currentTask;
         private long taskStartTime;
@@ -92,21 +84,9 @@ public class MultipleCoreProcessor {
             this.number = number;
         }
 
-        void process(Task task) {
-            task.setStatus(task.getDuration() != 0 ? TaskStatus.ACTIVE : TaskStatus.COMPLETE);
+        void process(Task task, long taskStartTime) {
             currentTask = task;
-            taskStartTime = ticks;
-        }
-
-        boolean isFree() {
-            return currentTask == null || currentTask.getStatus() == TaskStatus.COMPLETE;
-        }
-
-        void doWork() {
-            ticks++;
-            if (currentTask != null && taskStartTime + currentTask.getDuration() <= ticks) {
-                currentTask.setStatus(TaskStatus.COMPLETE);
-            }
+            this.taskStartTime = taskStartTime;
         }
 
         int getNumber() {
@@ -117,17 +97,45 @@ public class MultipleCoreProcessor {
             return taskStartTime;
         }
 
+        long getTaskEndTime() {
+            return currentTask == null ? 0 : taskStartTime + currentTask.getDuration();
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            Processor processor = (Processor) o;
+            return number == processor.number;
+        }
+
+        @Override
+        public int hashCode() {
+
+            return Objects.hash(number);
+        }
+
         @Override
         public String toString() {
             return "Processor{" +
                     "number=" + number +
                     '}';
         }
+
+        @Override
+        public int compareTo(Processor o) {
+            return Comparator.comparing(Processor::getTaskEndTime)
+                    .thenComparing(Processor::getNumber)
+                    .compare(this, o);
+        }
     }
 
     private static class Task {
         private final long duration;
-        private TaskStatus status = TaskStatus.WAIT;
 
         Task(long duration) {
             this.duration = duration;
@@ -137,19 +145,6 @@ public class MultipleCoreProcessor {
             return duration;
         }
 
-        TaskStatus getStatus() {
-            return status;
-        }
-
-        void setStatus(TaskStatus status) {
-            this.status = status;
-        }
-    }
-
-    private enum TaskStatus {
-        WAIT,
-        ACTIVE,
-        COMPLETE
     }
 
     private static class ProcessResult {
