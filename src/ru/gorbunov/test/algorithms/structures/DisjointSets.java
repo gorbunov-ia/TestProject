@@ -1,5 +1,7 @@
 package ru.gorbunov.test.algorithms.structures;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.Scanner;
 
 /**
@@ -29,11 +31,19 @@ public class DisjointSets {
     private int maxRowCount = 0;
 
     public static void main(String[] args) {
-        new DisjointSets().process();
+        new DisjointSets().process(System.in);
+//        final ByteArrayInputStream inputStream = new ByteArrayInputStream(("5 5\n" +
+//                "1 1 1 1 1\n" +
+//                "3 5\n" +
+//                "2 4\n" +
+//                "1 4\n" +
+//                "5 4\n" +
+//                "5 3\n").getBytes());
+//        new DisjointSets().process(inputStream);
     }
 
-    private void process() {
-        final Scanner scanner = new Scanner(System.in);
+    private void process(InputStream in) {
+        final Scanner scanner = new Scanner(in);
         int tableCount = scanner.nextInt();
         int commandCount = scanner.nextInt();
         tableRows = new int[tableCount];
