@@ -4,8 +4,9 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.function.BiConsumer;
+
+import static ru.gorbunov.test.algorithms.structures.tree.TreeCreator.createTree;
 
 /**
  * Построить in-order, pre-order и post-order обходы данного двоичного дерева.
@@ -36,38 +37,6 @@ public class TreeIterationExample {
         print(tree, Order.IN);
         print(tree, Order.PRE);
         print(tree, Order.POST);
-    }
-
-    private static TreeNode createTree(InputStream in) {
-        Scanner scanner = new Scanner(in);
-        final int size = scanner.nextInt();
-        final TreeNode[] treeNodes = new TreeNode[size];
-        for (int i = 0; i < size; i++) {
-            final int key = scanner.nextInt();
-            final int left = scanner.nextInt();
-            final int right = scanner.nextInt();
-            if (treeNodes[i] == null) {
-                treeNodes[i] = new TreeNode();
-            }
-            TreeNode node = treeNodes[i];
-            node.setValue(key);
-            node.setLeft(resolve(left, treeNodes));
-            node.setRight(resolve(right, treeNodes));
-        }
-        return treeNodes[0];
-    }
-
-    private static TreeNode resolve(int parent, TreeNode[] treeNodes) {
-        if (parent == -1) {
-            return null;
-        }
-        final TreeNode currentNode = treeNodes[parent];
-        if (currentNode != null) {
-            return currentNode;
-        }
-        TreeNode node = new TreeNode();
-        treeNodes[parent] = node;
-        return node;
     }
 
     private static void print(TreeNode root, Order order) {
