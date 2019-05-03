@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
+/**
+ * Обход дерева в глубину. Пример через итератор.
+ */
 public class DepthFirstSearch {
     public static void main(String[] args) {
         new DepthFirstSearch().process();
