@@ -44,8 +44,8 @@ public class MyHashSet {
     public static void main(String[] args) {
         final InputStream input = createInput();
         final Scanner scanner = new Scanner(input);
-        int tableSize = Integer.valueOf(scanner.nextLine());
-        int commandCount = Integer.valueOf(scanner.nextLine());
+        int tableSize = Integer.parseInt(scanner.nextLine());
+        int commandCount = Integer.parseInt(scanner.nextLine());
         final MyHashSet myHashSet = new MyHashSet(tableSize);
         for (int i = 0; i < commandCount; i++) {
             final String command = scanner.nextLine();
@@ -56,7 +56,7 @@ public class MyHashSet {
             } else if (command.startsWith(FIND)) {
                 System.out.println(myHashSet.find(command.substring(FIND.length())));
             } else if (command.startsWith(CHECK)) {
-                int chainNumber = Integer.valueOf(command.substring(CHECK.length()));
+                int chainNumber = Integer.parseInt(command.substring(CHECK.length()));
                 System.out.println(myHashSet.check(chainNumber));
             } else {
                 throw new IllegalArgumentException();

@@ -31,7 +31,7 @@ public class PriorityQueueExample {
                 "ExtractMax").getBytes()));
         //Scanner scanner = new Scanner(System.in);
         final int commandCount = scanner.nextInt();
-        final PriorityQueue<Integer> queue = new PriorityQueue<>((Comparator<Integer>) Comparator.naturalOrder().reversed());
+        final PriorityQueue<Integer> queue = new PriorityQueue<>(Comparator.<Integer>naturalOrder().reversed());
         for (int i = 0; i < commandCount; i++) {
             final String command = scanner.next();
             if ("Insert".equals(command)) {

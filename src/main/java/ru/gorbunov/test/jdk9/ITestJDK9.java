@@ -7,7 +7,7 @@ public interface ITestJDK9 {
         return prvt() * prvt();
     }
 
-    /*private*/default int prvt() {
+    private int prvt() {
         System.out.println("From ITestJDK9");
         return 3;
     }
