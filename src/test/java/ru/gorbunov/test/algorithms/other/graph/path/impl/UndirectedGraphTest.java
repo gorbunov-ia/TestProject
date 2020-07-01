@@ -54,4 +54,36 @@ class UndirectedGraphTest {
 
         Assertions.assertEquals(0, path.size());
     }
+
+    @Test
+    void testSearchingPath() {
+        final Vertex first = new Vertex(10);
+        graph.addVertex(first);
+        final Vertex second = new Vertex(20);
+        graph.addVertex(second);
+        final Vertex third = new Vertex(30);
+        graph.addVertex(third);
+        final Vertex fourth = new Vertex(40);
+        graph.addVertex(fourth);
+
+        graph.addEdge(new Edge(first, first));
+        graph.addEdge(new Edge(first, second));
+        graph.addEdge(new Edge(second, third));
+        graph.addEdge(new Edge(first, third));
+
+        final List<Edge> path = graph.getPath(first, third);
+
+        assertPath(path, first, third);
+    }
+
+    private void assertPath(List<Edge> path, Vertex from, Vertex to) {
+        Assertions.assertNotEquals(0, path.size());
+
+        Vertex previous = from;
+        for (Edge edge : path) {
+            Assertions.assertEquals(previous, edge.getFrom());
+            previous = edge.getTo();
+        }
+        Assertions.assertEquals(to, previous);
+    }
 }
