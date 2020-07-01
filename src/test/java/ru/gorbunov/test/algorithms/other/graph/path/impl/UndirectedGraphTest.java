@@ -19,6 +19,31 @@ class UndirectedGraphTest {
     }
 
     @Test
+    void testNullFromArgument() {
+        final Vertex first = new Vertex(0);
+        graph.addVertex(first);
+
+        Assertions.assertThrows(NullPointerException.class, () -> graph.getPath(null, first));
+    }
+
+    @Test
+    void testNullToArgument() {
+        final Vertex first = new Vertex(0);
+        graph.addVertex(first);
+
+        Assertions.assertThrows(NullPointerException.class, () -> graph.getPath(first, null));
+    }
+
+    @Test
+    void testUnknownVertex() {
+        final Vertex first = new Vertex(0);
+        graph.addVertex(first);
+        final Vertex second = new Vertex(1);
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> graph.getPath(first, second));
+    }
+
+    @Test
     void testNoEdge() {
         final Vertex first = new Vertex(0);
         graph.addVertex(first);
