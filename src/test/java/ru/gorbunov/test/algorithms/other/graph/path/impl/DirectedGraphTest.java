@@ -9,13 +9,13 @@ import ru.gorbunov.test.algorithms.other.graph.path.api.Vertex;
 
 import java.util.List;
 
-class UndirectedGraphTest {
+class DirectedGraphTest {
 
     private Graph graph;
 
     @BeforeEach
     void setUp() {
-        graph = new UndirectedGraph();
+        graph = new DirectedGraph();
     }
 
     @Test
@@ -74,7 +74,7 @@ class UndirectedGraphTest {
 
         final List<Edge> path = graph.getPath(graphInit.getThird(), graphInit.getFirst());
 
-        assertPath(path, graphInit.getThird(), graphInit.getFirst());
+        Assertions.assertEquals(0, path.size());
     }
 
     private GraphInit graphInit() {
