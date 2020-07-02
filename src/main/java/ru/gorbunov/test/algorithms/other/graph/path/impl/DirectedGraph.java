@@ -1,25 +1,11 @@
 package ru.gorbunov.test.algorithms.other.graph.path.impl;
 
 import ru.gorbunov.test.algorithms.other.graph.path.api.Edge;
-import ru.gorbunov.test.algorithms.other.graph.path.api.Graph;
-import ru.gorbunov.test.algorithms.other.graph.path.api.Vertex;
 
-import java.util.List;
-
-public class DirectedGraph implements Graph {
+public class DirectedGraph extends AbstractGraphImpl {
 
     @Override
-    public void addVertex(Vertex vertex) {
-
-    }
-
-    @Override
-    public void addEdge(Edge edge) {
-
-    }
-
-    @Override
-    public List<Edge> getPath(Vertex from, Vertex to) {
-        return null;
+    protected void addEdgeToStorage(Edge edge) {
+        getNeighbours(edge.getFrom()).add(edge.getTo());
     }
 }
