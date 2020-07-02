@@ -49,6 +49,10 @@ class UndirectedGraphTest {
         graph.addVertex(first);
         final Vertex second = new Vertex(1);
         graph.addVertex(second);
+        final Vertex third = new Vertex(2);
+        graph.addVertex(third);
+
+        graph.addEdge(new Edge(first, third));
 
         final List<Edge> path = graph.getPath(first, second);
 
@@ -68,8 +72,8 @@ class UndirectedGraphTest {
 
         graph.addEdge(new Edge(first, first));
         graph.addEdge(new Edge(first, second));
+        graph.addEdge(new Edge(second, fourth));
         graph.addEdge(new Edge(second, third));
-        graph.addEdge(new Edge(first, third));
 
         final List<Edge> path = graph.getPath(first, third);
 

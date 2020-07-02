@@ -4,11 +4,15 @@ import ru.gorbunov.test.algorithms.other.graph.path.api.Edge;
 import ru.gorbunov.test.algorithms.other.graph.path.api.Graph;
 import ru.gorbunov.test.algorithms.other.graph.path.api.Vertex;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class UndirectedGraph implements Graph {
 
@@ -27,14 +31,53 @@ public class UndirectedGraph implements Graph {
         validateEdge(edge);
 
         graphStorage.get(edge.getFrom()).add(edge.getTo());
-        graphStorage.get(edge.getTo()).add(edge.getFrom());
+        if (!edge.getFrom().equals(edge.getTo())) {
+            graphStorage.get(edge.getTo()).add(edge.getFrom());
+        }
     }
 
     @Override
     public List<Edge> getPath(Vertex from, Vertex to) {
         validateVertexes(from, to);
 
+        Set<Vertex> visitedVertexes = new HashSet<>();
+
+        Queue<Vertex> queue = new LinkedList<>();
+        Map<Vertex, Edge> path = new HashMap<>();
+        queue.add(from);
+
+        while (!queue.isEmpty()) {
+
+            final Vertex current = queue.poll();
+
+            if (current.equals(to)) {
+                return restorePath(path, to);
+            }
+
+            visitedVertexes.add(current);
+            List<Vertex> neighbours = graphStorage.get(current);
+
+            for (Vertex vertex : neighbours) {
+                if (!visitedVertexes.contains(vertex)) {
+                    path.put(vertex, new Edge(current, vertex));
+                    queue.add(vertex);
+                }
+            }
+        }
         return Collections.emptyList();
+    }
+
+    private List<Edge> restorePath(Map<Vertex, Edge> edges, Vertex vertex) {
+        List<Edge> path = new ArrayList<>();
+
+        Edge edge = edges.get(vertex);
+        while (edge != null) {
+            path.add(edge);
+            edge = edges.get(edge.getFrom());
+        }
+
+        Collections.reverse(path);
+        return path;
     }
 
     private void validateVertexes(Vertex from, Vertex to) {
